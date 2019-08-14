@@ -61,7 +61,13 @@ export default {
     search () { return this.$store.state.search },
     selectedProcesses: {
       get () { return this.$store.state.selectedProcesses },
-      set (v) { this.$store.commit('setSelectedProcesses', v) }
+      set (v) {
+        let uids = []
+        for (var i in v) {
+          uids.push(v[i].uid)
+        }
+        this.$store.commit('setSelectedProcesses', uids)
+      }
     },
     procs () {
       return this.processes || this.$store.getters.processes

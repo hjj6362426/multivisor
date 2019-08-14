@@ -34,24 +34,16 @@
              :disabled="!row.item.running" class="mx-0 my-1">
         <v-icon color="red">stop</v-icon>
       </v-btn>
-      <v-menu open-on-hover>
-        <v-btn icon small slot="activator" color="blue--text">
-          <v-icon>more_vert</v-icon>
-        </v-btn>
-        <div class="grey lighten-3">
-          <v-btn icon small @click="viewDetails(process)">
-            <v-icon color="blue">info</v-icon>
-          </v-btn>
-          <v-btn icon small @click="viewLog(process, 'out')"
-                 v-if="process.logfile">
-            <v-icon color="blue">description</v-icon>
-          </v-btn>
-          <v-btn icon small @click="viewLog(process, 'err')"
-                 v-if="process.stderr_logfile">
-            <v-icon color="orange">description</v-icon>
-          </v-btn>
-        </div>
-      </v-menu>
+      <v-btn icon small @click="viewDetails(process)" class="mx-0 my-1">
+        <v-icon color="blue">info</v-icon>
+      </v-btn>
+       <v-btn icon small @click="viewLog(process, 'out')" v-if="process.logfile" class="mx-0 my-1">
+        <v-icon color="blue">description</v-icon>
+      </v-btn>
+        <v-btn icon small @click="viewLog(process, 'err')" v-if="process.stderr_logfile" class="mx-0 my-1">
+        <v-icon color="orange">description</v-icon>
+      </v-btn>
+
     </td>
   </tr>
 </template>

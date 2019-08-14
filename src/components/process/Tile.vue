@@ -21,24 +21,18 @@
                :disabled="!process.running">
           <v-icon color="red">stop</v-icon>
         </v-btn>
-        <v-menu open-on-hover>
-          <v-btn icon small slot="activator" color="blue--text">
-            <v-icon>more_vert</v-icon>
-          </v-btn>
-          <div class="grey lighten-3">
-            <v-btn icon small @click="viewDetails(process)">
-              <v-icon color="blue">info</v-icon>
-            </v-btn>
-            <v-btn icon small @click="viewLog(process, 'out')"
-                   v-if="process.logfile">
-              <v-icon color="blue">description</v-icon>
-            </v-btn>
-            <v-btn icon small @click="viewLog(process, 'err')"
-                   v-if="process.stderr_logfile">
-              <v-icon color="orange">description</v-icon>
-            </v-btn>
-          </div>
-        </v-menu>
+                    <v-btn icon  @click="viewDetails(process)">
+                      <v-icon color="blue">info</v-icon>
+                    </v-btn>
+                    <v-btn icon  @click="viewLog(process, 'out')"
+                           v-if="process.logfile">
+                      <v-icon color="blue">description</v-icon>
+                    </v-btn>
+                    <v-btn icon  @click="viewLog(process, 'err')"
+                           v-if="process.stderr_logfile">
+                      <v-icon color="orange">description</v-icon>
+                    </v-btn>
+
       </v-flex>
     </v-list-tile-action>
   </v-list-tile>
