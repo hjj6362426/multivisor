@@ -1,4 +1,5 @@
 #!/usr/bin/env python
+# -*- coding: utf-8 -*
 import copy
 import os
 import json
@@ -14,6 +15,7 @@ from supervisor.xmlrpc import Faults
 from supervisor.states import RUNNING_STATES
 
 from .util import sanitize_url, filter_patterns
+from .send_sms import newsmssend
 
 log = logging.getLogger('multivisor')
 
@@ -67,7 +69,7 @@ class Supervisor(dict):
             except zerorpc.TimeoutExpired:
                 self.log.info('Timeout expired')
             except Exception as err:
-                self.log.info('Connection error')
+                self.log.info('Connection error %s', err)
             finally:
                 curr_time = time.time()
                 delta = curr_time - last_retry
@@ -85,6 +87,14 @@ class Supervisor(dict):
         elif name.startswith('PROCESS_GROUP'):
             self.refresh()
         elif name.startswith('PROCESS_STATE'):
+            if name == 'PROCESS_STATE_FATAL':
+                #self.log.info('handling %s...xxxxxx', json.dumps(event))
+
+                message = "服务器崩溃了，游戏服：%s，分组：%s，所在服务器：%s\n" % (event['payload']['processname'], event['payload']['groupname'], event['server'])
+                #message = 'error:%s' % (event['eventname'])
+                re = newsmssend(message)
+                #self.log.info('handling %s...xxxxxx %s', name, re)
+
             payload = event['payload']
             puid = '{}:{}:{}'.format(self.name,
                                      payload['groupname'],
